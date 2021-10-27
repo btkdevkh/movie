@@ -1,64 +1,70 @@
-SIELI Recrutement React
------------------------
+# Getting Started with Create React App
 
-# Présentation
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Ce projet est un test technique pour le stage React de 4 à 6 mois chez SIELI.
+## Available Scripts
 
-Il vise à confirmer que le postulant :
-- comprend les consignes
-- suit le processus
-- possède les compétences techniques requises pour intégrer le stage dans les bonnes conditions.
+In the project directory, you can run:
 
-Aucune limite de temps n'est fixée, mais l'estimation de la durée de développement est de 2 heures.
+### `npm start`
 
-# Description des attentes
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## Le repository back
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-Le postulant devra s'interfacer avec l'API Symfony créée par SIELI ([Lien du Repository de l'API](https://gitlab.com/mcharibo/sieli-recrutement-api)) avec React.
-Le Readme du Repository précisé :
-- La structure des données
-- La description des différents endpoints
+### `npm test`
 
-## Fonctionnalités attendues
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-Les fonctionnalités front attendues sont :
+### `npm run build`
 
-- Possibilité de voir la liste des films enregistrés
-- Possibilité d'accéder aux détails d'un film
-- Possibilité de créer un film
-- Possibilité de modifier un film
-- Possibilité de supprimer un film
-- Possibilité d'ajouter et de retirer un "film" des "favoris"
-- Voir les films favoris dans une vue dédiée
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-Aucune contrainte graphique n'est imposée.
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-## Points de vigilance
-- Si une erreur est retournée par l'API (notamment les erreurs de validations), afficher un message pour prévenir l'utilisateur
-- Penser à documenter votre code
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-# Technologies à utiliser
+### `npm run eject`
 
-Langage à utiliser :
-- TypeScript
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-Librairies à utiliser :
-- React
-- Material UI (v5)
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-# Processus
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-- Lire le Readme du projet front ET du projet back
-- Envoyer un mail à "recrutement@sieli.fr" avant de commencer le développement en précisant une estimation de temps du développement et des questions éventuelles
-- Créer une branche sur le projet front contenant votre prénom et nom
-- Développer les différentes fonctionnalités demandées sur la branche créée. Chaque fonctionnalité fera l'objet d'un commit dont le message expliquera ce qui a été développé.
-- Une fois le développé terminé, poussez votre code sur le repository front et ouvrez une merge request vers master
-- Envoyer un mail à "recrutement@sieli.fr" en précisant que vous avez terminé (ou pas), ainsi que le temps que vous avez passé à développer
-- Jérôme reviendra vers vous pour faire un point sur le projet
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+## Learn More
 
----
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-*Bon courage et à bientôt, Jérôme ;)*
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
