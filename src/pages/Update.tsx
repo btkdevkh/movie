@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { 
   Typography, 
   Button, 
@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { KeyboardArrowRight } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 // CSS custom styles
 const useStyles = makeStyles({
@@ -23,7 +23,7 @@ const useStyles = makeStyles({
   title: {
     padding: 10,
     background: 'teal',
-    borderRadius: 5
+    borderRadius: 5,
   },
   form: {
     maxWidth: 500,
@@ -31,7 +31,7 @@ const useStyles = makeStyles({
   }
 })
 
-const Create = () => {
+const Update = () => {
   const classes = useStyles();
 
   // Fileds states
@@ -45,8 +45,9 @@ const Create = () => {
   const [dateError, setDateError] = useState<boolean>(false); 
 
   const history = useHistory();
+  const { id } = useParams<{ id: string }>();  
 
-  // Create movie
+  // Update movie
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
@@ -64,8 +65,8 @@ const Create = () => {
       const [y, m, d] = date.split('-');
       const releaseDate = [d, m, y].join('/');
       
-      fetch("http://127.0.0.1:8000/api/movie/", {
-        method: "POST",
+      fetch("http://127.0.0.1:8000/api/movie/"+id, {
+        method: "PUT",
         headers: {
           "Content-Type":  "application/json"
         },
@@ -81,6 +82,19 @@ const Create = () => {
     } 
   }
 
+  useEffect(() => {
+    // Get movie
+    fetch("http://127.0.0.1:8000/api/movie/"+id)
+    .then(res => res.json())
+    .then(data => {
+      setTitle(data.title)
+      setDirector(data.director)
+      setDate(data.releaseDate)
+      setIsFavorite(data.isFavorite)      
+    })
+    .catch(err => console.log(err));
+  }, [id])
+
   return (
     <div className={classes.form}>
       <Typography
@@ -92,7 +106,7 @@ const Create = () => {
         className={classes.title}
         style={{ marginBottom: '20px', color: '#fff' }}
       >
-        Ajouter un film
+        Modifier un film
       </Typography>
 
       <form 
@@ -128,7 +142,6 @@ const Create = () => {
           variant="outlined"
           color="secondary"
           fullWidth
-          required
           style={{ marginBottom: '20px' }}
           InputLabelProps={{
             shrink: true,
@@ -174,4 +187,4 @@ const Create = () => {
   )
 }
 
-export default Create;
+export default Update;

@@ -1,7 +1,8 @@
 import { Fragment } from "react";
+import { useHistory } from 'react-router-dom';
 import { DeleteOutline, Favorite, FavoriteBorder } from "@mui/icons-material";
-import { Card, CardHeader, IconButton } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { Button, Card, CardContent, CardHeader, IconButton } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
 
 // TypeScript
 type PropType = {
@@ -15,37 +16,14 @@ type PropType = {
   toggleIsFavorite: Function
 }
 
-// Somes styles
-const useStyles = makeStyles({
-  favorite: {
-    border: (movie) => {
-      if(movie === true) {
-        return '3px solid pink'
-      }
-    }
-  }
-})
-
 const MovieCard = ({ movie, handleDelete, toggleIsFavorite }: PropType) => {
-  const classes = useStyles(movie.isFavorite);
+  const history = useHistory();
 
   return (
-    <Card 
-      elevation={3}
-      className={classes.favorite}
-    >
+    <Card elevation={3}>
       <CardHeader
         action={
           <Fragment>
-            <IconButton
-              type="submit"
-              onClick={(e) => {
-                e.preventDefault();
-                toggleIsFavorite(movie.id);
-              }}
-            >
-              {movie.isFavorite ? <Favorite /> : <FavoriteBorder /> }
-            </IconButton>
             <IconButton
               onClick={() => handleDelete(movie.id)}
             >
@@ -55,6 +33,25 @@ const MovieCard = ({ movie, handleDelete, toggleIsFavorite }: PropType) => {
         }
         title={movie.title}
       />
+      <CardContent>
+        <IconButton
+          onClick={() => toggleIsFavorite(movie.id)}
+        >
+          {movie.isFavorite ? <Favorite /> : <FavoriteBorder /> }
+        </IconButton>
+        <IconButton
+          onClick={() => history.push(`/update/${movie.id}`)}
+        >
+          <EditIcon />
+        </IconButton>
+        <Button
+          variant="contained"
+          size="small"
+          onClick={() => history.push(`/details/${movie.id}`)}
+        >
+          Details
+        </Button>
+      </CardContent>
     </Card>
   )
 }

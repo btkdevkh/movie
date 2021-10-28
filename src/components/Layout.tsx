@@ -12,7 +12,7 @@ import { makeStyles } from "@mui/styles";
 import HomeIcon from '@mui/icons-material/Home';
 import MovieIcon from '@mui/icons-material/Movie';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useHistory, useLocation } from "react-router";
 import { Theme } from "@mui/system";
 import { format } from 'date-fns';
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) => {
       display: "flex"
     },
     active: {
-      background: '#f4f4f4'
+      background: '#f4f4f4 !important'
     },
     title: {
       padding: theme.spacing(2)
@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) => {
       marginBottom: 60
     }
   }
-})
+});
 
 const Layout = ({ children }: LayoutProps) => {
   const classes = useStyles();
@@ -64,22 +64,22 @@ const Layout = ({ children }: LayoutProps) => {
   const menuItems = [
     {
       text: "Accueil",
-      icon: <HomeIcon color="secondary" />,
+      icon: <HomeIcon color="primary" />,
       path: '/'
     },
     {
       text: "Tous les films",
-      icon: <MovieIcon color="secondary" />,
+      icon: <MovieIcon color="primary" />,
       path: '/movies'
     },
     {
       text: "Films favories",
-      icon: <FavoriteIcon color="secondary" />,
+      icon: <FavoriteIcon color="primary" />,
       path: '/favorites'
     },
     {
       text: "Ajouter un film",
-      icon: <CreateNewFolderIcon color="secondary" />,
+      icon: <AddCircleIcon color="primary" />,
       path: '/create'
     }
   ]
@@ -87,12 +87,12 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <div className={classes.root}>
       <AppBar
-        className={classes.appbar}
         elevation={0}
+        className={classes.appbar}
       >
         <Toolbar>
           <Typography>
-            Ajourd'hui, { format(new Date(), 'do MMM Y') }
+            Ajourd'hui, {format(new Date(), 'do MMM Y')}
           </Typography>
         </Toolbar>
       </AppBar>

@@ -5,6 +5,9 @@ import Home from './pages/Home';
 import Create from './pages/Create';
 import Favorites from './pages/Favorites';
 import Layout from './components/Layout';
+import Update from './pages/Update';
+import Details from './pages/Details';
+import Movies from './pages/Movies';
 
 const theme = createTheme({
   palette: {
@@ -29,8 +32,11 @@ const App = () => {
           <Layout>
             <Switch>
               <Route exact path="/" component={Home} />
+              <Route exact path="/movies" component={Movies} />
+              <Route exact path="/details/:id" component={Details} />
               <Route exact path="/create" component={Create} />
               <Route exact path="/favorites" component={Favorites} />
+              <Route exact path="/update/:id" component={Update} />
             </Switch>
           </Layout>
         </BrowserRouter>
