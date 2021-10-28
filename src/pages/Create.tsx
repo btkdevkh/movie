@@ -7,7 +7,10 @@ import {
   RadioGroup, 
   FormControlLabel, 
   FormLabel, 
-  FormControl 
+  FormControl ,
+  Alert,
+  AlertTitle,
+  Stack
 } from "@mui/material";
 import { KeyboardArrowRight } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
@@ -40,6 +43,8 @@ const Create = () => {
   const [date, setDate] = useState<string>('');
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
+  const [msg, setMsg] = useState<string>('');
+
   const [titleError, setTitleError] = useState<boolean>(false);
   const [directorError, setDirectorError] = useState<boolean>(false);
   const [dateError, setDateError] = useState<boolean>(false); 
@@ -59,7 +64,7 @@ const Create = () => {
     if(director === '') setDirectorError(true);
     if(date === '') setDateError(true);
 
-    if(title && director && (!isFavorite || isFavorite)) {
+    if(title && director && date && (!isFavorite || isFavorite)) {
       // Formated date
       const [y, m, d] = date.split('-');
       const releaseDate = [d, m, y].join('/');
@@ -72,13 +77,15 @@ const Create = () => {
         body: JSON.stringify({ title, director, releaseDate, isFavorite })
       })
       .then(() => history.push("/movies"))
-      .catch(err => console.log(err));
+      .catch(err => setMsg(err));
 
       setTitle('');
       setDirector('');
       setDate('');
       setIsFavorite(false);
-    } 
+    }  else {
+      setMsg('Champs Obligatoires *');
+    }
   }
 
   return (
@@ -170,6 +177,15 @@ const Create = () => {
           Ajouter
         </Button>
       </form>
+      {
+        titleError || directorError ? (
+          <Stack sx={{ width: '100%' }} spacing={2} my={2}>
+            <Alert severity="error">
+              <AlertTitle><strong>{msg}</strong></AlertTitle>
+            </Alert>
+          </Stack>
+        ) : null
+      }
     </div>
   )
 }
