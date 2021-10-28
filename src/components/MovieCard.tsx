@@ -11,7 +11,8 @@ type PropType = {
     director: string,
     isFavorite: boolean,
   },
-  handleDelete: Function
+  handleDelete: Function,
+  toggleIsFavorite: Function
 }
 
 // Somes styles
@@ -19,13 +20,13 @@ const useStyles = makeStyles({
   favorite: {
     border: (movie) => {
       if(movie === true) {
-        return '2px solid pink'
+        return '3px solid pink'
       }
     }
   }
 })
 
-const MovieCard = ({ movie, handleDelete }: PropType) => {
+const MovieCard = ({ movie, handleDelete, toggleIsFavorite }: PropType) => {
   const classes = useStyles(movie.isFavorite);
 
   return (
@@ -36,7 +37,13 @@ const MovieCard = ({ movie, handleDelete }: PropType) => {
       <CardHeader
         action={
           <Fragment>
-            <IconButton>
+            <IconButton
+              type="submit"
+              onClick={(e) => {
+                e.preventDefault();
+                toggleIsFavorite(movie.id);
+              }}
+            >
               {movie.isFavorite ? <Favorite /> : <FavoriteBorder /> }
             </IconButton>
             <IconButton

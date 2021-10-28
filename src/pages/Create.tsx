@@ -13,7 +13,7 @@ import { KeyboardArrowRight } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
 import { useHistory } from "react-router";
 
-// Somes styles
+// CSS custom styles
 const useStyles = makeStyles({
   field: {
     marginTop: 20,
@@ -23,7 +23,8 @@ const useStyles = makeStyles({
   title: {
     padding: 10,
     background: 'teal',
-    borderRadius: 5
+    borderRadius: 5,
+    color: '#fff !important'
   },
   form: {
     maxWidth: 500,
@@ -137,11 +138,14 @@ const Create = () => {
           onChange={(e) => setDate(e.target.value)}
         />
 
-        <FormControl className={classes.field} style={{ marginBottom: '20px' }}>
+        <FormControl 
+          className={classes.field} 
+          style={{ marginBottom: '20px' }}
+        >
           <FormLabel>Film Favorie ?</FormLabel>
           <RadioGroup
             value={isFavorite} 
-            onChange={(e) => setIsFavorite(e.target.checked)}
+            onChange={() => setIsFavorite(o => !o)}
           >
             <FormControlLabel 
               value={true}
