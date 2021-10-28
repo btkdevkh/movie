@@ -22,7 +22,7 @@ const useStyles = makeStyles({
   },
   title: {
     padding: 10,
-    background: 'teal',
+    background: '#71a0c8',
     borderRadius: 5
   },
   form: {
@@ -71,7 +71,7 @@ const Create = () => {
         },
         body: JSON.stringify({ title, director, releaseDate, isFavorite })
       })
-      .then(() => history.push("/"))
+      .then(() => history.push("/movies"))
       .catch(err => console.log(err));
 
       setTitle('');
@@ -90,7 +90,7 @@ const Create = () => {
         gutterBottom
         color="textSecondary"
         className={classes.title}
-        style={{ marginBottom: '20px', color: '#fff' }}
+        style={{ marginBottom: '15px', color: '#fff' }}
       >
         Ajouter un film
       </Typography>
