@@ -1,28 +1,16 @@
-import { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import MovieCard from "./MovieCard";
+import { useFetch } from "../hooks/useFetch";
 
 // TypeScript
 type movieType = {
+  id: number,
   isFavorite: boolean,
 }
 
 const MoviesList = ({ favorite = false }) => {
-  const [movies, setMovies] = useState<any[]>([]);
-
-  // Get movies
-  useEffect(() => {    
-    fetch("http://127.0.0.1:8000/api/movie/")
-      .then(res => res.json())
-      .then(data => {
-        if(favorite === true) {
-          setMovies(data.filter((movie: movieType) => movie.isFavorite === favorite));
-        } else {
-          setMovies(data)
-        }
-      })
-      .catch(err => console.log(err))    
-  }, [favorite])
+  // Get movies depends on pages condition(favorite or not)
+  const { datas: movies, loading, error } = useFetch("http://127.0.0.1:8000/api/movie/", favorite);
 
   // Get movie
   const fetchMovie = async(id: number) => {
@@ -36,9 +24,6 @@ const MoviesList = ({ favorite = false }) => {
     await fetch("http://127.0.0.1:8000/api/movie/"+id, {
       method: "DELETE"
     })
-
-    const newMovies = movies.filter(movie => movie.id !== id);
-    setMovies(newMovies);
   }
 
   // Toggle isFavorite
@@ -62,12 +47,14 @@ const MoviesList = ({ favorite = false }) => {
       body: JSON.stringify({ title, director, releaseDate, isFavorite })
     })
 
-    setMovies(movies.map(movie => movie.id === id ? { ...movie, isFavorite: !movie.isFavorite } : movie));
+    return movies?.map((movie: movieType) => movie.id === id ? { ...movie, isFavorite: !movie.isFavorite } : movie);
   }
 
   return (
     <Grid container spacing={1}>
-      {movies.length > 0 && movies.map(movie => (
+      {loading && <Typography mx='auto' variant="h5">Chargement...</Typography>}
+      {error && <Typography mx='auto' variant="h5">{error}</Typography>}
+      {movies && movies.map((movie: any) => (
         <Grid item key={movie.id} xs={12} sm={12} md={6} lg={4} mx="auto">
           <MovieCard 
             movie={movie} 

@@ -1,8 +1,9 @@
 import { Fragment } from "react";
 import { useHistory } from 'react-router-dom';
-import { DeleteOutline, Favorite, FavoriteBorder } from "@mui/icons-material";
+import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import { Button, Card, CardContent, CardHeader, IconButton } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
+import ModalDel from "./ModalDel";
 
 // TypeScript
 type PropType = {
@@ -24,11 +25,12 @@ const MovieCard = ({ movie, handleDelete, toggleIsFavorite }: PropType) => {
       <CardHeader
         action={
           <Fragment>
-            <IconButton
-              onClick={() => handleDelete(movie.id)}
+            {/* <IconButton
+              onClick={deleteHandler}
             >
               <DeleteOutline />
-            </IconButton>
+            </IconButton> */}
+            <ModalDel handleDelete={handleDelete} movie={movie} />
           </Fragment>
         }
         title={movie.title}

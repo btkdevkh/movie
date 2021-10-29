@@ -22,7 +22,7 @@ type LayoutProps =  {
   children: React.ReactNode
 }
 
-// Some styles
+// CSS custom styles
 const drawerWidth = 210;
 const useStyles = makeStyles((theme: Theme) => {
   return {
@@ -92,7 +92,7 @@ const Layout = ({ children }: LayoutProps) => {
       >
         <Toolbar>
           <Typography>
-            Ajourd'hui, {format(new Date(), 'do MMM Y')}
+            Ajourd'hui, le {format(new Date(), 'do MMM Y')} &copy; sieliMovies
           </Typography>
         </Toolbar>
       </AppBar>
