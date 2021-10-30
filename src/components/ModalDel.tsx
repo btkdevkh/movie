@@ -7,15 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { IconButton } from '@mui/material';
 import { DeleteOutline } from '@mui/icons-material';
-
-// TypeScript
-type PropType = {
-  movie: {
-    id: number
-    title: string
-  },
-  handleDelete: Function,
-}
+import { ModalPropType } from '../types/Movie';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -35,15 +27,10 @@ const btnStyle = {
   margin: 2
 }
 
-const ModalDel = ({ handleDelete, movie }: PropType) => {
+const ModalDel = ({ movie, handleDelete }: ModalPropType) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-  const deleteHandler = () => {
-    handleDelete(movie.id);
-    handleClose();
-  }
 
   return (
     <div>
@@ -64,8 +51,19 @@ const ModalDel = ({ handleDelete, movie }: PropType) => {
             <Typography id="transition-modal-title" variant="h6" component="h2">
               Voulez-vous supprimer le film {movie.title} ?
             </Typography>
-            <Button sx={btnStyle} variant="contained" onClick={deleteHandler}>Oui</Button>
-            <Button variant="contained" onClick={handleClose}>Non</Button>
+            <Button 
+              sx={btnStyle} 
+              variant="contained" 
+              onClick={() => handleDelete(movie.id)}
+            >
+              Oui
+            </Button>
+            <Button 
+              variant="contained" 
+              onClick={handleClose}
+            >
+              Non
+            </Button>
           </Box>
         </Fade>
       </Modal>

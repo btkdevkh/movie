@@ -16,11 +16,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useHistory, useLocation } from "react-router";
 import { Theme } from "@mui/system";
 import { format } from 'date-fns';
-
-// TypeScript
-type LayoutProps =  { 
-  children: React.ReactNode
-}
+import { LayoutProps } from "../types/Movie";
 
 // CSS custom styles
 const drawerWidth = 210;

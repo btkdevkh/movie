@@ -4,20 +4,9 @@ import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import { Button, Card, CardContent, CardHeader, IconButton } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import ModalDel from "./ModalDel";
+import { MovieCardPropType } from "../types/Movie";
 
-// TypeScript
-type PropType = {
-  movie: {
-    id: number
-    title: string,
-    director: string,
-    isFavorite: boolean,
-  },
-  handleDelete: Function,
-  toggleIsFavorite: Function
-}
-
-const MovieCard = ({ movie, handleDelete, toggleIsFavorite }: PropType) => {
+const MovieCard = ({ movie, handleDelete, toggleIsFavorite }: MovieCardPropType) => {
   const history = useHistory();
 
   return (
@@ -25,11 +14,6 @@ const MovieCard = ({ movie, handleDelete, toggleIsFavorite }: PropType) => {
       <CardHeader
         action={
           <Fragment>
-            {/* <IconButton
-              onClick={deleteHandler}
-            >
-              <DeleteOutline />
-            </IconButton> */}
             <ModalDel handleDelete={handleDelete} movie={movie} />
           </Fragment>
         }

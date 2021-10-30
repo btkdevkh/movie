@@ -1,34 +1,35 @@
 import { Grid, Typography } from "@mui/material";
 import MovieCard from "./MovieCard";
-import { useFetch } from "../hooks/useFetch";
-
-// TypeScript
-type movieType = {
-  id: number,
-  isFavorite: boolean,
-}
+import { getMovies, getMovie, deleteMovie, updateMovie } from "../api/Movies";
+import { useCallback, useEffect, useState } from "react";
+import { Movie } from "../types/Movie";
 
 const MoviesList = ({ favorite = false }) => {
-  // Get movies depends on pages condition(favorite or not)
-  const { datas: movies, loading, error } = useFetch("http://127.0.0.1:8000/api/movie/", favorite);
+  const [movies, setMovies] = useState<[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [msg, setMsg] = useState<string>('');
 
-  // Get movie
-  const fetchMovie = async(id: number) => {
-    const res = await fetch("http://127.0.0.1:8000/api/movie/"+id);
-    const data = await res.json();
-    return data;
-  }
-
-  // Delete movie
-  const handleDelete = async(id: number) => {
-    await fetch("http://127.0.0.1:8000/api/movie/"+id, {
-      method: "DELETE"
-    })
-  }
+  // Get movies with useCallback
+  const handleGetMovies = useCallback(async () => {
+    const datas = await getMovies();
+    if(datas) {
+      if(favorite === true) {
+        setLoading(false);
+        setMovies(datas.filter((movie: Movie) => movie.isFavorite === favorite));
+      } else {
+        setLoading(false);
+        setMovies(datas);
+      }
+    } else {
+      setMsg('Service indisponible, réessayez plus tard SVP !');
+      setLoading(false);
+    }
+  }, [favorite]);
 
   // Toggle isFavorite
   const toggleIsFavorite = async(id: number) => {
-    const movieToggle = await fetchMovie(id);
+    // get movie by its id for toggling
+    const movieToggle = await getMovie(id);
     
     const updateIsFavoriteMovie = { 
       ...movieToggle, 
@@ -36,25 +37,38 @@ const MoviesList = ({ favorite = false }) => {
       isFavorite: !movieToggle.isFavorite 
     };
 
-    // Need to be destructured with Symfony
+    // need to be destructured with Symfony
     const { title, director, releaseDate, isFavorite } = updateIsFavoriteMovie;
+    const movieToUpdate = { title, director, releaseDate, isFavorite };
     
-    await fetch("http://127.0.0.1:8000/api/movie/"+id, {
-      method: "PUT",
-      headers: {
-        "Content-Type":  "application/json"
-      },
-      body: JSON.stringify({ title, director, releaseDate, isFavorite })
-    })
+    // update movie toggled
+    const movieUpdated = await updateMovie(movieToUpdate, id);
+    movieUpdated ? 
+    handleGetMovies() : 
+    setMsg('Service indisponible, réessayez plus tard SVP !');
+  };
 
-    return movies?.map((movie: movieType) => movie.id === id ? { ...movie, isFavorite: !movie.isFavorite } : movie);
-  }
+  // Delete movie
+  const handleDelete = async (id: number) => {
+    const movieDeleted = await deleteMovie(id);
+    movieDeleted ? 
+    handleGetMovies() : 
+    setMsg('Service indisponible, réessayez plus tard SVP !');
+  };
+
+  // Component mounted
+  useEffect(() => {
+    if(!movies.length) {
+      setLoading(true);
+      handleGetMovies();
+    }
+  }, [movies, handleGetMovies])
 
   return (
     <Grid container spacing={1}>
       {loading && <Typography mx='auto' variant="h5">Chargement...</Typography>}
-      {error && <Typography mx='auto' variant="h5">{error}</Typography>}
-      {movies && movies.map((movie: any) => (
+      {msg && <Typography mx='auto' variant="h5">{msg}</Typography>}
+      {movies.length > 0 && movies.map((movie: any) => (
         <Grid item key={movie.id} xs={12} sm={12} md={6} lg={4} mx="auto">
           <MovieCard 
             movie={movie} 
