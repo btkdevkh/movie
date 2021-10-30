@@ -12,6 +12,7 @@ const MoviesList = ({ favorite = false }) => {
   // Get movies with useCallback
   const handleGetMovies = useCallback(async () => {
     const datas = await getMovies();
+
     if(datas) {
       if(favorite === true) {
         setLoading(false);
@@ -58,9 +59,14 @@ const MoviesList = ({ favorite = false }) => {
 
   // Component mounted
   useEffect(() => {
+    setLoading(true);
+
     if(!movies.length) {
-      setLoading(true);
       handleGetMovies();
+    }
+
+    return () => {
+      setLoading(false);
     }
   }, [movies, handleGetMovies])
 
