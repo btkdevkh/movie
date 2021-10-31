@@ -11,20 +11,24 @@ const MoviesList = ({ favorite = false }) => {
 
   // Get movies with useCallback
   const handleGetMovies = useCallback(async () => {
+    setLoading(true);
+
     const datas = await getMovies();
 
     if(datas) {
       if(favorite === true) {
-        setLoading(false);
         setMovies(datas.filter((movie: Movie) => movie.isFavorite === favorite));
       } else {
-        setLoading(false);
         setMovies(datas);
       }
+      
+      setLoading(false);
     } else {
       setMsg('Service indisponible, réessayez plus tard SVP !');
       setLoading(false);
     }
+
+    setLoading(false);
   }, [favorite]);
 
   // Toggle isFavorite
@@ -59,8 +63,6 @@ const MoviesList = ({ favorite = false }) => {
 
   // Component mounted
   useEffect(() => {
-    setLoading(true);
-
     if(!movies.length) {
       handleGetMovies();
     }
