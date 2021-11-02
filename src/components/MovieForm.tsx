@@ -70,14 +70,13 @@ const MovieForm = ({ mode = "add", id = "" }) => {
     } else {
       // Formated date
       const releaseDateFormated = releaseDate.split('-').reverse().join('/');  
-      const isFav = isFavorite;    
       
       // Construct movie object
       const movie = { 
         title, 
         director, 
         releaseDate: releaseDateFormated, 
-        isFavorite: isFav
+        isFavorite
       };
 
       if(id) {
