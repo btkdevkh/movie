@@ -5,9 +5,9 @@ import { useCallback, useEffect, useState } from "react";
 import { Movie } from "../types/Movie";
 
 const MoviesList = ({ favorite = false }) => {
-  const [movies, setMovies] = useState<[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [msg, setMsg] = useState<string>('');
+  const [movies, setMovies] = useState<Movie[] | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [msg, setMsg] = useState('');
 
   // Get movies with useCallback
   const handleGetMovies = useCallback(async () => {
@@ -63,7 +63,7 @@ const MoviesList = ({ favorite = false }) => {
 
   // Component mounted
   useEffect(() => {
-    if(!movies.length) {
+    if(!movies) {
       handleGetMovies();
     }
 
@@ -76,10 +76,10 @@ const MoviesList = ({ favorite = false }) => {
     <Grid container spacing={1}>
       {loading && <Typography mx='auto' variant="h5">Chargement...</Typography>}
       {msg && <Typography mx='auto' variant="h5">{msg}</Typography>}
-      {movies.length > 0 && movies.map((movie: any) => (
+      {movies && movies.map((movie: Movie) => (
         <Grid item key={movie.id} xs={12} sm={12} md={6} lg={4} mx="auto">
           <MovieCard 
-            movie={movie} 
+            movie={movie}
             handleDelete={handleDelete}
             toggleIsFavorite={toggleIsFavorite}
           />

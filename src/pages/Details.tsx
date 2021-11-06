@@ -5,9 +5,9 @@ import { getMovie } from "../api/Movies";
 import { Movie } from "../types/Movie";
 
 const Details = () => {
-  const [movie, setMovie] = useState<Movie>();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [msg, setMsg] = useState<string>('');
+  const [movie, setMovie] = useState<Movie | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [msg, setMsg] = useState('');
   const { id } = useParams<{ id: string }>(); 
 
   // Component monted

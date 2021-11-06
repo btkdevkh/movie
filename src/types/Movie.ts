@@ -10,21 +10,8 @@ export type LayoutProps =  {
   children: React.ReactNode
 }
 
-export type ModalPropType = {
-  movie: {
-    id: number
-    title: string
-  },
+export type MovieFunctionProps = {
+  movie: Movie,
   handleDelete: Function,
-}
-
-export type MovieCardPropType = {
-  movie: {
-    id: number
-    title: string,
-    director: string,
-    isFavorite: boolean,
-  },
-  handleDelete: Function,
-  toggleIsFavorite: Function
+  toggleIsFavorite?: Function
 }

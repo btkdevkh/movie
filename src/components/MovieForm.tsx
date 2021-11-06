@@ -1,16 +1,14 @@
-import { useEffect, useState, ChangeEvent } from 'react';
+import { useEffect, useState, ChangeEvent, FormEvent } from 'react';
 import { 
   Typography, 
   Button, 
   TextField, 
-  Radio, 
-  RadioGroup, 
-  FormControlLabel, 
   FormLabel, 
   FormControl ,
   Alert,
   AlertTitle,
-  Stack
+  Stack,
+  Checkbox
 } from "@mui/material";
 import { KeyboardArrowRight } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
@@ -38,6 +36,7 @@ const useStyles = makeStyles({
 
 const MovieForm = ({ mode = "add", id = "" }) => {  
   const classes = useStyles();
+  const history = useHistory();  
 
   const [movies, setMovies] = useState<Movie>({
     title: '',
@@ -45,24 +44,22 @@ const MovieForm = ({ mode = "add", id = "" }) => {
     releaseDate: '',
     isFavorite: false
   });
-  const [msg, setMsg] = useState<string>('');
-  // eslint-disable-next-line
-  const [loading, setLoading] = useState<boolean>(false);
 
-  // Redirect
-  const history = useHistory();
+  const [msg, setMsg] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {   
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {       
     setMovies({
       ...movies,
+      isFavorite: e.target.checked,
       [e.target.name]: (e.target as HTMLInputElement).value
-    })
+    })    
   }
 
   // destructure from movies state
   const { title, director, releaseDate, isFavorite } = movies;
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if(!title || !director || !releaseDate) {
@@ -93,18 +90,19 @@ const MovieForm = ({ mode = "add", id = "" }) => {
 
   // Component mounted
   useEffect(() => {
-    setLoading(true);
+    mode === "add" ? setLoading(false) : setLoading(true);
 
     if(id) {
       // Get movie
-      getMovie(Number(id))
+      getMovie(+id)
       .then(data => {
         if(data) {
           setMovies({
             ...movies,
             title: data.title,
             director: data.director,
-            releaseDate: data.releaseDate
+            releaseDate: data.releaseDate,
+            isFavorite: data.isFavorite
           })
           
           setLoading(false);
@@ -124,6 +122,7 @@ const MovieForm = ({ mode = "add", id = "" }) => {
 
   return (
     <div className={classes.form}>
+      {loading && <Typography my={2} align="center" variant="h5">Chargement...</Typography>}
       <Typography
         variant="h6"
         component="h2"
@@ -187,22 +186,10 @@ const MovieForm = ({ mode = "add", id = "" }) => {
           style={{ marginBottom: '20px' }}
         >
           <FormLabel>Film Favorie ?</FormLabel>
-          <RadioGroup
-            name="isFavorite"
-            value={isFavorite}
-            onChange={handleChange}
-          >
-            <FormControlLabel
-              value={true}
-              control={<Radio />} 
-              label="Oui"
-            />
-            <FormControlLabel 
-              value={false}
-              control={<Radio />}
-              label="Non"
-            />
-          </RadioGroup>
+          <Checkbox 
+            checked={isFavorite}
+            onChange={handleChange} 
+          />
         </FormControl>
         
         <Button

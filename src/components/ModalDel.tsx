@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { IconButton } from '@mui/material';
 import { DeleteOutline } from '@mui/icons-material';
-import { ModalPropType } from '../types/Movie';
+import { MovieFunctionProps } from '../types/Movie';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -27,7 +27,7 @@ const btnStyle = {
   margin: 2
 }
 
-const ModalDel = ({ movie, handleDelete }: ModalPropType) => {
+const ModalDel = ({ movie, handleDelete }: MovieFunctionProps ) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
